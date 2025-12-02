@@ -21,3 +21,25 @@ def apply_op(pos, op):
         positions.append(pos)
     return positions
 ```
+
+#### Day 2
+First time ever using `reduce`. Nice
+
+```python
+from functools import reduce
+
+def is_valid_id(x):
+    x = str(x)
+    if len(x) % 2 == 0:
+        if x[:len(x)//2] == x[len(x)//2:]:
+            return False
+    return True
+def find_invald(r):
+    return [x for x in r if not is_valid_id(x)]
+
+ranges = [(x.split("-")[0], x.split("-")[1]) for x in data_test.replace("\n","").split(",")]
+ranges = [range(int(s), int(e)+1) for s,e in ranges]
+
+invalid_ids = reduce(lambda x, y: x+find_invald(y), ranges, [])
+```
+
