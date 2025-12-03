@@ -43,3 +43,5 @@ ranges = [range(int(s), int(e)+1) for s,e in ranges]
 invalid_ids = reduce(lambda x, y: x+find_invald(y), ranges, [])
 ```
 
+#### Day 3
+nothing. just ugly
