@@ -70,3 +70,11 @@ def overlaps(r1, r2):
         return e2-s1+1
     return 0
 ```
+
+#### Day 7 (5 hrs)
+
+ * If you're stuck, visualize your steps. Always visualize your results. Spent an hour debugging in the fog. Plot results and realize in two seconds what went wrong.
+ * Make your life hard. Don't use `networkx`. 
+ * Early puzzles are about finding any solution. Now a solution is not enough, it's about finding an "efficient" solution.
+
+
