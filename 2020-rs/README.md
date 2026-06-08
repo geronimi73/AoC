@@ -15,3 +15,5 @@ Claude's review:
 * yeah i'm overdoing the unwrap `let min: i16 = minmax.next().unwrap().trim().parse().unwrap();`
 * logical xor is `^`
 * &str.`nth()` takes a `usize` which is some basic type required by a lot of functions, conversion works with `x as usize`. Seems like its type is OS-dependent, either 32 or 64 bit (?)
+
+## Day 3
