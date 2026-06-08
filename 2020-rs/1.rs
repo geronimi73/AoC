@@ -1,3 +1,4 @@
+use std::fs;
 
 fn get_test_input() -> &'static str {
 	"1721
@@ -8,46 +9,42 @@ fn get_test_input() -> &'static str {
 1456"
 }
 
-use std::fs;
-
 fn get_input() -> String {
 	fs::read_to_string("1_input.txt").unwrap()
 }
 
-fn good_combo(num1: i64, num2: i64) -> bool {
-	num1 + num2 == 2020
-}
+fn part2(numbers: &Vec<i64>) {
+	let good_combo = |x, y, z| x + y + z == 2020;
 
-fn good_combo_3args(num1: i64, num2: i64, num3: i64) -> bool {
-	num1 + num2 + num3 == 2020
-}
-
-fn part2() {
-	let input = get_input();
-	let numbers: Vec<i64> = input.split("\n").filter_map(|x| x.trim().parse().ok()).collect();
-	for n1 in 0..numbers.len() {
-		for n2 in n1+1..numbers.len() {
-			for n3 in n2+1..numbers.len() {
-				if good_combo_3args(numbers[n1], numbers[n2], numbers[n3]) {
-					println!("{}", numbers[n1] * numbers[n2] * numbers[n3]);
+	for (idx1, &n1) in numbers.iter().enumerate() {
+		for (idx2, &n2) in numbers[idx1+1..].iter().enumerate() {
+			for &n3 in numbers[idx2+idx1+2..].iter() {
+				if good_combo(n1, n2, n3) {
+					println!("{}", n1 * n2 * n3);
 				}
 			}
 		}
 	}
 }
 
-fn part1() {
-	let input = get_input();
-	let numbers: Vec<i64> = input.split("\n").filter_map(|x| x.trim().parse().ok()).collect();
-	for n1 in 0..numbers.len() {
-		for n2 in n1+1..numbers.len() {
-			if good_combo(numbers[n1], numbers[n2]) {
-				println!("{}", numbers[n1] * numbers[n2]);
+fn part1(numbers: &Vec<i64>) {
+	let good_combo = |x, y| x + y == 2020;
+
+	for (idx1, &n1) in numbers.iter().enumerate() {
+		for n2 in &numbers[idx1+1..] {
+			if good_combo(n1, n2) {
+				println!("{}", n1 * n2);
 			}
 		}
 	}
 }
 
 fn main() {
-	part2();
+	let input = get_input();
+	let numbers: Vec<i64> = input.lines().filter_map(|x| x.trim().parse().ok()).collect();
+
+	part1(&numbers);
+	part2(&numbers);
 }
+
+
