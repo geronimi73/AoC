@@ -54,7 +54,7 @@ fn parse_pp(input: &str) -> Vec<HashMap<&str, &str>> {
 	result
 }
 
-fn part1(passports: &Vec<HashMap<&str, &str>>) {
+fn part1(passports: &[HashMap<&str, &str>]) {
 	let mut valid_cnt: i32 = 0;
 	let required_keys = [
 		"byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", 
@@ -181,6 +181,6 @@ fn main() {
 	let input = get_input();
 	let passports = parse_pp(&input);
 
-	// part1(&passports);
-	part2(&passports);
+	part1(&passports);
+	// part2(&passports);
 }
