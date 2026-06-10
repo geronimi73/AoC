@@ -45,3 +45,60 @@ fn is_tree(pos: &Pos, grid: &Vec<&str>) -> bool {
   This is the biggest one. In Rust, you should prefer the "unsized" versions:
   - &String → &str
   - &Vec<&str> → &[&str]
+
+## Day 4
+* Above lesson again. You can pass a Vec to a function which takes `&[ .. ]`
+
+E.g. define `fn part1(passports: &[HashMap<&str, &str>]) {`, but pass a `Vec<HashMap>`. OK? How does that work?
+
+* A pattern I love:
+
+```
+is_valid = val.chars().count() == 4 && match val.parse::<u32>() {
+    Ok(year) => (1920..=2002).contains(&year),
+    Err(_) => false,
+};
+if !is_valid {
+  println!("byr invalid {}", val)
+}
+```
+
+.. can (should!) be replaced with 
+
+```
+val.parse::<u32>().is_ok_and(|y| (1920..=2002).contains(&y))
+```
+
+* And another one of my python-translations:
+
+```
+match val.parse::<u32>() {
+    Ok(year) => true,
+    Err(_) => false,
+};
+```
+
+can literally replaced with `.is_ok()` 
+
+* Complete example:
+
+Replace 
+
+```
+is_valid = val.chars().count() == 9 && match val.parse::<u32>() {
+    Ok(year) => true,
+    Err(_) => false,
+};
+```
+
+with `val.len() == 9 && val.chars().all(|c| c.is_ascii_digit())`
+
+* And another nice pattern Claude suggested to use:
+
+```
+          "hcl" => val.strip_prefix('#')
+                      .is_some_and(|rest| rest.len() == 6
+                          && rest.chars().all(|c| c.is_ascii_hexdigit())),
+```
+* stop translating python
+
