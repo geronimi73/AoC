@@ -102,3 +102,14 @@ with `val.len() == 9 && val.chars().all(|c| c.is_ascii_digit())`
 ```
 * stop translating python
 
+
+
+## In between lessons
+
+### Error handling in Rust (ie. where are the python exceptions)
+* There's two basic types for returning results: `Option` and `Result`
+* `Option<T>` — "Is there a value or not?" either `Some` or `None`
+* `Result<T, E>` — "Did it succeed or fail, and why?"
+* `Option` is used in cases where None is expected and OK, while `Result` allows to dig deeper into why there is nothing, ie. this should work but something might go wrong and if that happens you also get an Error (compare to `Option`: None is just None, without any details given)
+* So Python's `None` would be an option. Optional attr in python classes for example which are `None` by default are modeled as `Option` in Rust
+
