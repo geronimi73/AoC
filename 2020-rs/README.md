@@ -127,3 +127,20 @@ if      let Some((name, age)) = s.split_once(",")
     Self::default()
 }
 ```
+
+Suggested improved version by Opus:
+
+```rs
+if let Some((name, age)) = s.split_once(',')
+    && let Ok(age) = age.parse()
+    && let name = name.trim()
+    && !name.is_empty()
+{
+    Self {
+        name: String::from(name),
+        age,
+    }
+} else {
+    Self::default()
+}
+```
