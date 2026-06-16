@@ -112,4 +112,18 @@ with `val.len() == 9 && val.chars().all(|c| c.is_ascii_digit())`
 * `Result<T, E>` — "Did it succeed or fail, and why?"
 * `Option` is used in cases where None is expected and OK, while `Result` allows to dig deeper into why there is nothing, ie. this should work but something might go wrong and if that happens you also get an Error (compare to `Option`: None is just None, without any details given)
 * So Python's `None` would be an `Option`. Optional attr in python classes for example which are `None` by default are modeled as `Option` in Rust
+* String splitting and parsing can apparently combined into **a single**  `if` statement. Very convenient
 
+```rs
+if      let Some((name, age)) = s.split_once(",") 
+    &&  let Ok(age) = age.parse()
+    &&  name.trim().chars().count() > 0
+{
+    Self {
+        name: String::from(name.trim()),
+        age
+    }
+} else {
+    Self::default()
+}
+```
