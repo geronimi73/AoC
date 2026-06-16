@@ -144,3 +144,43 @@ if let Some((name, age)) = s.split_once(',')
     Self::default()
 }
 ```
+
+* Iterating on this rustling exercise together with Opus and looking at the ref. solution revealed something `else` that was new to me. It's quite nice!
+
+`let .. else`, works like this:
+
+```rs
+let PATTERN = EXPRESSION else {
+    // this block MUST diverge — return / break / continue / panic / etc.
+};
+// from here on, the bindings from PATTERN are in scope
+```
+
+> The key idea: on success, the bindings escape into the surrounding scope and you keep going. On failure, the else block runs 
+
+Applied to the rustling exercise above, this is what the official solution looks like:
+
+```rs
+let mut split = s.split(',');
+let (Some(name), Some(age), None) = (split.next(), split.next(), split.next()) else {
+    //                      ^^^^ there should be no third element
+    return Self::default();
+};
+
+if name.is_empty() {
+    return Self::default();
+}
+
+let Ok(age) = age.parse() else {
+    return Self::default();
+};
+
+Self {
+    name: name.into(),
+    age,
+}
+```
+
+* -> Use string's `.is_empty()` and **not** `.chars().count() > 0` (which is what I did)
+
+
