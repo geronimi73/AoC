@@ -21,7 +21,7 @@ Claude's review:
 
 chars() walks from the start each time, so is_tree is O(width) per call. Since your input isASCII, use as_bytes() instead — direct index, O(1):
 
-```
+```rs
   fn is_tree(pos: &Pos, grid: &[&str]) -> bool {
       let row = grid[pos.y].as_bytes();
       row[pos.x % row.len()] == b'#'
@@ -30,7 +30,7 @@ chars() walks from the start each time, so is_tree is O(width) per call. Since y
 
 instead of 
 
-```
+```rs
 fn is_tree(pos: &Pos, grid: &Vec<&str>) -> bool {
 	let chars_line_cnt = grid[pos.y as usize].chars().count();
 	let mut chars_line: Chars = grid[pos.y as usize].chars();
@@ -53,7 +53,7 @@ E.g. define `fn part1(passports: &[HashMap<&str, &str>]) {`, but pass a `Vec<Has
 
 * A pattern I love:
 
-```
+```rs
 is_valid = val.chars().count() == 4 && match val.parse::<u32>() {
     Ok(year) => (1920..=2002).contains(&year),
     Err(_) => false,
@@ -65,13 +65,13 @@ if !is_valid {
 
 .. can (should!) be replaced with 
 
-```
+```rs
 val.parse::<u32>().is_ok_and(|y| (1920..=2002).contains(&y))
 ```
 
 * And another one of my python-translations:
 
-```
+```rs
 match val.parse::<u32>() {
     Ok(year) => true,
     Err(_) => false,
@@ -84,7 +84,7 @@ can literally replaced with `.is_ok()`
 
 Replace 
 
-```
+```rs
 is_valid = val.chars().count() == 9 && match val.parse::<u32>() {
     Ok(year) => true,
     Err(_) => false,
@@ -95,7 +95,7 @@ with `val.len() == 9 && val.chars().all(|c| c.is_ascii_digit())`
 
 * And another nice pattern Claude suggested to use:
 
-```
+```rs
           "hcl" => val.strip_prefix('#')
                       .is_some_and(|rest| rest.len() == 6
                           && rest.chars().all(|c| c.is_ascii_hexdigit())),
